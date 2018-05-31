@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%String token=request.getParameter("token");
+    System.out.println(token);%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -51,10 +53,10 @@
 			<i class="icon-cross"></i>
 		</a>
 		<h1 class="fh5co-logo">
-			<a class="navbar-brand" href="index.jsp" >NOT LOGED IN</a>
+			<a class="navbar-brand" href="index.jsp" id="username">NOT LOGED IN</a>
 		</h1>
-		<ul>
-			<li class="active"><a href="index.jsp">Home</a></li>
+		<ul id="menu">
+			<li class="active"><a href="index.jsp" id="list">Home</a></li>
 			<li><a href="register.jsp">Register</a></li>
 			<li><a href="pricing.html">Login</a></li>
 		</ul>
@@ -147,6 +149,7 @@
 	<script src="js/salvattore.min.js"></script>
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<script src="js/index.js"></script>
 
 
 

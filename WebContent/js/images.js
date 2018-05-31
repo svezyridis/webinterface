@@ -1,50 +1,82 @@
 $(document)
 	.ready(
 		function() {
-
-		    alert("${variable}");
+		    var galleryid = getUrlParameter('galleryid');
+		    var token = getUrlParameter('token');
+		    
 		    var user;
 		    $.post('Caller', {
-			action : "getUsername",galleryid:params[0][1]
+		        action : "getUsername",token:token
 		    }, function(returnedData) {
-			username.innerText = returnedData.username;
-			user = returnedData.username;
+		        
+		        user=returnedData.username;
 		    }, 'json');
 
-		    function getUsername() {
-			return user;
+		    function getUsername(){
+		        return user;
 		    }
+		    alert(getUsername());
 
-		    $.post('Caller', {
-			action : "getImages"
-		    }, function(returnedData) {
-			var column1 = document.createElement("DIV");
-			column1.setAttribute("class", "column");
-			var column2 = document.createElement("DIV");
-			column2.setAttribute("class", "column");
-			var column3 = document.createElement("DIV");
-			column3.setAttribute("class", "column");
-			var column4 = document.createElement("DIV");
-			column4.setAttribute("class", "column");
-			var columns = [ column1, column2, column3, column4 ];
-			$(returnedData.result).each(function(index, image) {
-			    var div = document.createElement("DIV");
-			    var aimg = addImage(image);
-			    div.appendChild(aimg);
-			    // commentbtn
-			    var cmntBtn = addButton(image);
-			    div.appendChild(cmntBtn);
-			    // commentbox
-			    var detailBox = addCommentBox(image.id);
-			    div.appendChild(detailBox)
+		    $
+			    .post(
+				    'Caller',
+				    {
+					action : "getImages",
+					gallid : galleryid
+				    },
+				    function(returnedData) {
+					if (returnedData.error == "") {
+					    var column1 = document
+						    .createElement("DIV");
+					    column1.setAttribute("class",
+						    "column");
+					    var column2 = document
+						    .createElement("DIV");
+					    column2.setAttribute("class",
+						    "column");
+					    var column3 = document
+						    .createElement("DIV");
+					    column3.setAttribute("class",
+						    "column");
+					    var column4 = document
+						    .createElement("DIV");
+					    column4.setAttribute("class",
+						    "column");
+					    var columns = [ column1, column2,
+						    column3, column4 ];
+					    $(returnedData.result)
+						    .each(
+							    function(index,
+								    image) {
+								var div = document
+									.createElement("DIV");
+								var aimg = addImage(image);
+								div
+									.appendChild(aimg);
+								// commentbtn
+								var cmntBtn = addButton(image);
+								div
+									.appendChild(cmntBtn);
+								// commentbox
+								var detailBox = addCommentBox(image.id);
+								div
+									.appendChild(detailBox)
 
-			    columns[(index % 4)].appendChild(div)
-			});
-			document.getElementById("images").appendChild(column1);
-			document.getElementById("images").appendChild(column2);
-			document.getElementById("images").appendChild(column3);
-			document.getElementById("images").appendChild(column4);
-		    }, 'json');
+								columns[(index % 4)]
+									.appendChild(div)
+							    });
+					    document.getElementById("images")
+						    .appendChild(column1);
+					    document.getElementById("images")
+						    .appendChild(column2);
+					    document.getElementById("images")
+						    .appendChild(column3);
+					    document.getElementById("images")
+						    .appendChild(column4);
+					} else {
+					    alert(returnedData.error);
+					}
+				    }, 'json');
 
 		    function showComments(button) {
 			var commentbox = document.getElementById(button
@@ -239,7 +271,8 @@ $(document)
 			divcom.appendChild(inputText);
 			divcom.appendChild(button);
 			form.appendChild(divcom);
-			form.addEventListener('submit', function() {
+			form.addEventListener('submit', function(event) {
+			    event.preventDefault();
 			    postComment(this);
 			});
 			actionBox.appendChild(commentList);
@@ -247,13 +280,15 @@ $(document)
 			detailBox.appendChild(actionBox);
 			return detailBox;
 		    }
-		    function get_query() {
-			var url = location.href;
-			var qs = url.substring(url.indexOf('?') + 1).split('&');
-			for (var i = 0, result = {}; i < qs.length; i++) {
-			    qs[i] = qs[i].split('=');
-			    result[qs[i][0]] = qs[i][1];
-			}
-			return result;
+		    function getUrlParameter(name) {
+			name = name.replace(/[\[]/, '\\[').replace(/[\]]/,
+				'\\]');
+			var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+			var results = regex.exec(location.search);
+			return results === null ? ''
+				: decodeURIComponent(results[1].replace(/\+/g,
+					' '));
 		    }
+		    ;
+
 		});

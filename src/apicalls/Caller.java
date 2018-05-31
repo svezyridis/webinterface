@@ -74,15 +74,10 @@ public class Caller extends HttpServlet {
 		}
 	}
 	public static JSONObject getUsername(String token) {
-		JSONObject auth = GetToken("DIRID", "savvas1", "savvas1");
-		auth = auth.getJSONObject("token");
-		auth = auth.getJSONObject("data");
-		System.out.println(auth.toString());
-
 		try {
 			System.out.println(Systems.getRandomDirectoryURL());
 			Content content = Request.Post(Systems.getRandomDirectoryURL()).bodyForm(Form.form()
-					.add("token", auth.toString()).add("action", "getUsername").build())
+					.add("token", token).add("action", "getUsername").build())
 					.execute().returnContent();
 			System.out.println(content.asString());
 
@@ -153,7 +148,8 @@ public class Caller extends HttpServlet {
 			throws ServletException, IOException {		
 		String action = request.getParameter("action");
 		if (action.equals("getImages")) {
-			String data = getGallery("sth","1").toString();
+			String galleryid = request.getParameter("gallid");
+			String data = getGallery("sth",galleryid).toString();
 			response.setContentType("application/JSON");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(data);
@@ -161,7 +157,8 @@ public class Caller extends HttpServlet {
 			return;
 		}
 		else if (action.equals("getUsername")) {
-			String data = getUsername("sth").toString();
+			String token=request.getParameter("token");
+			String data = getUsername(token).toString();
 			response.setContentType("application/JSON");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(data);
