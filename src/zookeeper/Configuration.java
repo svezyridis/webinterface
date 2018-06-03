@@ -66,6 +66,10 @@ public static List<Map> getAvailableDs() {
 	Configuration instance = getInstance();
 	return instance.dirSystems;
 	}
+public static String getMyURL() {
+	Configuration instance = getInstance();
+	return instance.myip;
+}
 	
 		
 	public static String getMyIdentifier() {

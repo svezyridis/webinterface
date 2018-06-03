@@ -1,7 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%String token=request.getParameter("token");
-    System.out.println(token);%>
+	pageEncoding="UTF-8"%>
+<%
+
+	if (request.getParameter("token") != null && request.getParameter("token") != "") {
+		%>
+		<script type="text/javascript">
+		token=<%=request.getParameter("token")%>;
+		</script><%
+		session.setAttribute("token", request.getParameter("token"));
+	}
+	else{
+		if (session.getAttribute("token")!=null && session.getAttribute("token")!=""){
+			%>
+			<script type="text/javascript">
+			token=<%=session.getAttribute("token")%>;
+		</script><%
+		}
+	}
+
+%>
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -53,12 +72,18 @@
 			<i class="icon-cross"></i>
 		</a>
 		<h1 class="fh5co-logo">
-			<a class="navbar-brand" href="index.jsp" id="username">NOT LOGED IN</a>
+			<a class="navbar-brand" href="index.jsp" id="username">NOT LOGED
+				IN</a>
 		</h1>
 		<ul id="menu">
-			<li class="active"><a href="index.jsp" id="list">Home</a></li>
-			<li><a href="register.jsp">Register</a></li>
-			<li><a href="pricing.html">Login</a></li>
+			<li class="active"><a href="index" id="list1">Home</a></li>
+			<li><a href="register" id="list2">Register</a></li>
+			<li><a href="login" id="list3">Login</a></li>
+		<li><form action="${pageContext.request.contextPath}/Caller"
+					method="post" hidden="true" id="signout">
+					<input type="submit" name="Sign out" value="Signout" />
+					<input type="hidden" name="action" value="signout"/> 
+				</form></li>
 		</ul>
 	</div>
 	<header id="fh5co-header" role="banner">
@@ -77,43 +102,54 @@
 
 			<div class="row">
 
-        <div id="fh5co-board" data-columns>
+				<div id="fh5co-board" data-columns>
 
-        	<div class="item">
-        		<div class="animate-box">
+					<div class="item">
+						<div class="animate-box">
 							<a href="images/img_1.jpg" class="image-popup fh5co-board-img"
 								title="Create your very own photo collections!"><img
 								src="images/img_1.jpg" alt="Free HTML5 Bootstrap template"></a>
 						</div>
-        		<div class="fh5co-desc">Create your very own collection of images!</div>
-        	</div>
-        	<div class="item">
-        		<div class="animate-box">
-	        		<a href="images/img_2.jpg" class="image-popup fh5co-board-img" title="Meet other photography enthusiasts around the world!"><img src="images/img_2.jpg" alt="Free HTML5 Bootstrap template"></a>
-	        		<div class="fh5co-desc">Meet other photography enthusiasts around the world!</div>
-        		</div>
-        	</div>
-        	<div class="item">
-        		<div class="animate-box">
-	        		<a href="images/img_3.jpg" class="image-popup fh5co-board-img" title="Connect with your friends to share your photos!" ><img src="images/img_3.jpg" alt="Free HTML5 Bootstrap template"></a>
-	        		<div class="fh5co-desc">Connect with your friends to share your photos!</div>
-        		</div>
-        	</div>
-        	<div class="item">
-        		<div class="animate-box">
-	        		<a href="images/img_4.jpg" class="image-popup fh5co-board-img" title="Build your social network!"><img src="images/img_4.jpg" alt="Free HTML5 Bootstrap template"></a>
-	        		<div class="fh5co-desc">Build your social network!</div>
-        		</div>
-        	</div>
-        	<div class="item">
-        		<div class="animate-box">
-	        		<a href="images/img_6.jpg" class="image-popup fh5co-board-img" title="Join us now!"><img src="images/img_6.jpg" alt="Free HTML5 Bootstrap template"></a>
-	        		<div class="fh5co-desc">Join us now!</div>
-        		</div>
-        	</div>
-        </div>
-        </div>
-       </div>
+						<div class="fh5co-desc">Create your very own collection of
+							images!</div>
+					</div>
+					<div class="item">
+						<div class="animate-box">
+							<a href="images/img_2.jpg" class="image-popup fh5co-board-img"
+								title="Meet other photography enthusiasts around the world!"><img
+								src="images/img_2.jpg" alt="Free HTML5 Bootstrap template"></a>
+							<div class="fh5co-desc">Meet other photography enthusiasts
+								around the world!</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="animate-box">
+							<a href="images/img_3.jpg" class="image-popup fh5co-board-img"
+								title="Connect with your friends to share your photos!"><img
+								src="images/img_3.jpg" alt="Free HTML5 Bootstrap template"></a>
+							<div class="fh5co-desc">Connect with your friends to share
+								your photos!</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="animate-box">
+							<a href="images/img_4.jpg" class="image-popup fh5co-board-img"
+								title="Build your social network!"><img
+								src="images/img_4.jpg" alt="Free HTML5 Bootstrap template"></a>
+							<div class="fh5co-desc">Build your social network!</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="animate-box">
+							<a href="images/img_6.jpg" class="image-popup fh5co-board-img"
+								title="Join us now!"><img src="images/img_6.jpg"
+								alt="Free HTML5 Bootstrap template"></a>
+							<div class="fh5co-desc">Join us now!</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
@@ -126,15 +162,14 @@
 				<div class="col-md-12 text-center">
 					<p>
 						<small>&copy; Hydrogen Free HTML5 Template. All Rights
-							Reserved. <br>Designed by: Savvas Vezyridis 
+							Reserved. <br>Designed by: Savvas Vezyridis
 						</small>
 					</p>
 				</div>
 			</div>
 		</div>
 	</footer>
-
-
+	
 	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
 	<!-- jQuery Easing -->

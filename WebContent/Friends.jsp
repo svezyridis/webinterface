@@ -11,6 +11,7 @@
 <%
 	}
 %>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,6 +19,7 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
+
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +29,6 @@
 <meta name="author" content="SAVVAS VEZYRIDIS" />
 
 
-
 <!-- Google Webfonts -->
 <link
 	href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500'
@@ -35,18 +36,26 @@
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700'
 	rel='stylesheet' type='text/css'>
 
+
+
 <!-- Animate.css -->
 <link rel="stylesheet" href="css/animate.css">
 <!-- Icomoon Icon Fonts-->
 <link rel="stylesheet" href="css/icomoon.css">
 <!-- Magnific Popup -->
 <link rel="stylesheet" href="css/magnific-popup.css">
-<!-- Salvattore -->
-<link rel="stylesheet" href="css/salvattore.css">
 <!-- Theme Style -->
 <link rel="stylesheet" href="css/style.css">
+<style>
+.button {
+    margin: auto;
+    width: 15%;
+    padding: 10px;
+}
+</style>
 <!-- Modernizr JS -->
 <script src="js/modernizr-2.6.2.min.js"></script>
+
 <!-- FOR IE9 below -->
 <!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
@@ -60,13 +69,13 @@
 			<i class="icon-cross"></i>
 		</a>
 		<h1 class="fh5co-logo">
-			<a class="navbar-brand" href="index.html" id="username">Not Loged
-				In</a>
+			<a class="navbar-brand" href="index.jsp" id="username">NOT LOGED
+				IN</a>
 		</h1>
-		<ul>
-			<li><a href="index">Home</a></li>
+		<ul id="menu">
+			<li><a href="index" id="list1">Home</a></li>
 			<li><a href="register" id="list2">Register</a></li>
-			<li class="active"><a href="login" id="list3">Login</a></li>
+			<li><a href="login" id="list3">Login</a></li>
 			<li><form action="${pageContext.request.contextPath}/Caller"
 					method="post" hidden="true" id="signout">
 					<input type="submit" name="Sign out" value="Signout" /> <input
@@ -79,29 +88,20 @@
 			<div class="row">
 				<div class="col-md-12">
 					<a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Menu <i
-						class="icon-menu"></i></a> <a class="navbar-brand" href="index.jsp">InstaTUC</a>
+						class="icon-menu"></i></a> <a class="navbar-brand" href="index.jsp">Instatuc</a>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!-- END .header -->
 
-
 	<div id="fh5co-main">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
-					<h2>Login</h2>
-					<div class="fh5co-spacer fh5co-spacer-sm" ></div>
-					<p>You can login using any of the following Authentication
-						Service providers:</p>
-					<ul id="systems">
-					</ul>
-						
-				</div>
-			</div>
+			<ul id="friends"></ul>
 		</div>
+		<div id="button" class="button"></div>
 	</div>
+
 
 	<footer id="fh5co-footer">
 
@@ -110,34 +110,29 @@
 				<div class="col-md-12 text-center">
 					<p>
 						<small>&copy; Hydrogen Free HTML5 Template. All Rights
-							Reserved. <br>Designed by: Savvas Vezyridis
+							Reserved. <br>Designed by: <a href="http://freehtml5.co/"
+							target="_blank">FREEHTML5.co</a> | Images by: <a
+							href="http://pexels.com" target="_blank">Pexels</a>
 						</small>
 					</p>
 				</div>
 			</div>
 		</div>
 	</footer>
-
-
-
-	<!-- jQuery -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/login.js"></script>
-	<!-- jQuery Easing -->
-	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
-	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Magnific Popup -->
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<!-- Salvattore -->
-	<script src="js/salvattore.min.js"></script>
-	<!-- Main JS -->
-	<script src="js/main.js"></script>
-
-
-
-
 </body>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/Friends.js"></script>
+
+
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js"></script>
+<!-- Magnific Popup -->
+<script src="js/jquery.magnific-popup.min.js"></script>
+<!-- Main JS -->
+<script src="js/main.js"></script>
 </html>

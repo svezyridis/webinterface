@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="zookeeper.Configuration"%>
-<%@ page import="java.util.List"%>
-<%@page import="java.util.Map" %>
+<%
+	if (session.getAttribute("token") != null && session.getAttribute("token") != "") {
+%>
+<script type="text/javascript">
+    token =
+<%=session.getAttribute("token")%>
+    ;
+</script>
+<%
+	}
+%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -46,11 +54,11 @@
 		
 	<div id="fh5co-offcanvass">
 		<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
-		<h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">Hydrogen</a></h1>
+		<h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">Not Loged In</a></h1>
 		<ul>
-			<li><a href="index.jsp">Home</a></li>
-			<li class="active"><a href="register.jsp">Register</a></li>
-			<li><a href="login.jsp">Login</a></li>
+			<li><a href="index">Home</a></li>
+			<li class="active"><a href="register">Register</a></li>
+			<li><a href="login">Login</a></li>
 		</ul>
 	</div>
 	<header id="fh5co-header" role="banner">

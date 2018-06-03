@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	if (session.getAttribute("token") != null && session.getAttribute("token") != "") {
+%>
+<script type="text/javascript">
+    token =
+<%=session.getAttribute("token")%>
+    ;
+</script>
+<%
+	}
+%>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -12,12 +23,10 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Hydrogen &mdash; A free HTML5 Template by FREEHTML5.CO</title>
+<title>InstaTUC &mdash; The TUC image sharing network</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-<meta name="keywords"
-	content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-<meta name="author" content="FREEHTML5.CO" />
+<meta name="description" content="The TUC image sharing network" />
+<meta name="author" content="SAVVAS VEZYRIDIS" />
 
 
 <!-- Google Webfonts -->
@@ -26,8 +35,8 @@
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700'
 	rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="css/columns.css">
-		<link rel="stylesheet" href="css/commentbox.css">
+<link rel="stylesheet" href="css/columns.css">
+<link rel="stylesheet" href="css/commentbox.css">
 <link rel="stylesheet" href="css/lightbox.css">
 <!-- Animate.css -->
 <link rel="stylesheet" href="css/animate.css">
@@ -52,12 +61,18 @@
 			<i class="icon-cross"></i>
 		</a>
 		<h1 class="fh5co-logo">
-			<a class="navbar-brand" id="username"></a>
+			<a class="navbar-brand" href="index.jsp" id="username">NOT LOGED
+				IN</a>
 		</h1>
-		<ul>
-			<li class="active"><a href="index.jsp">Home</a></li>
-			<li><a href="register.jsp">Register</a></li>
-			<li><a href="pricing.html">Login</a></li>
+		<ul id="menu">
+			<li ><a href="index" id="list1">Home</a></li>
+			<li><a href="register" id="list2">Register</a></li>
+			<li><a href="login" id="list3">Login</a></li>
+			<li><form action="${pageContext.request.contextPath}/Caller"
+					method="post" hidden="true" id="signout">
+					<input type="submit" name="Sign out" value="Signout" />
+					<input type="hidden" name="action" value="signout"/> 
+				</form></li>
 		</ul>
 	</div>
 	<header id="fh5co-header" role="banner">
@@ -75,10 +90,10 @@
 	<div id="fh5co-main">
 		<div class="container">
 			<div class="row" id="images">
-				
 			</div>
 		</div>
 	</div>
+
 	<footer id="fh5co-footer">
 
 		<div class="container">

@@ -2,26 +2,29 @@ $(document).ready(
 	function() {
 
 	    var user;
-	    var token = getUrlParameter('token');
 	    $.post('Caller', {
 		action : "getUsername",
-		token : token
+		token : JSON.stringify(token)
 	    }, function(returnedData) {
 		if (returnedData.error == "") {
 		    user = returnedData.username;
-		    ;
-		    setUsernameOnMenu();
+		    setMenu();
 		} else
 		    alert(returnedData.error)
 	    }, 'json');
 
 	    function getUsername() {
-		alert(user);
+		
 		return user;
 	    }
 
-	    function setUsernameOnMenu() {
+	    function setMenu() {
 		document.getElementById('username').innerText = getUsername();
+		document.getElementById('list2').innerText = 'Galleries';
+		document.getElementById('list2').setAttribute("href","Galleries.jsp");
+		document.getElementById('list3').innerText = 'Friends';
+		document.getElementById('list3').setAttribute("href","Friends.jsp");
+		document.getElementById('signout').removeAttribute("hidden");
 	    }
 
 	    function getUrlParameter(name) {
