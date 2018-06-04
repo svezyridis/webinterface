@@ -11,5 +11,5 @@
     	<zoopass>savvas</zoopass>
     </zookeeper>
     <name>webinterface</name>
-    <hostname>https://snf-815309.vm.okeanos.grnet.gr:8443</hostname>
+    <hostname>https://snf-821392.vm.okeanos.grnet.gr:8443/webinterface</hostname>
   </settings>

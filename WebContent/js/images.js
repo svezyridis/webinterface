@@ -6,6 +6,7 @@ $(document)
             var user;
             var imglist = [];
             var btnadded=false;
+            var owner;
 
             if (typeof token == 'undefined') {
                 var login = document.createElement("A");
@@ -29,6 +30,11 @@ $(document)
                     setMenu();
                 } else
                     alert(returnedData.error)
+                    if(returnedData.error=='token has expired'){
+			$.post('Caller', {
+				action : "signout",
+			    }, function(returnedData) {});
+		    }
             }, 'json');
 
             function getUsername() {
@@ -70,8 +76,8 @@ $(document)
                     .post(
                         'Caller', {
                             action: "postComment",
-                            imageid: form
-                                .getAttribute("imageid"),
+                            imageid: form.getAttribute("imageid"),
+                            token:JSON.stringify(token),
                             text: txt.value
                         },
                         function(returnedData) {
@@ -87,7 +93,7 @@ $(document)
                                     .createElement("A");
                                 commenterName
                                     .setAttribute("href",
-                                        "https://www.google.gr/");
+                                        "Galleries.jsp?user="+getUsername());
                                 commenterName.setAttribute(
                                     "class",
                                     "commenterName");
@@ -143,6 +149,7 @@ $(document)
                 cmntBtn.onclick = function() {
                     showComments(this);
                 };
+                if(owner==user){
                 var deleteBtn = document.createElement("BUTTON");
                 deleteBtn.setAttribute("class", "delete-button");
                 deleteBtn.setAttribute("buttonid", image.id);
@@ -150,9 +157,12 @@ $(document)
                 deleteBtn.onclick = function() {
                     deleteImage(this);
                 };
-                divbtns.appendChild(cmntBtn);
                 divbtns.appendChild(deleteBtn);
+                }
+                divbtns.appendChild(cmntBtn);
+               
                 return divbtns;
+                
             }
 
             function addCommentBox(imgid) {
@@ -307,8 +317,10 @@ $(document)
                         contentType: false,
                         success: function(response) {
                             response = JSON.parse(response);
-                            if(response.error=='')
+                            if(response.error==''){
+                        	alert('image added')
                             	addImages();
+                            }
                             else
                         	alert(response.error);
                             	    
@@ -345,6 +357,7 @@ $(document)
                                 var columns = [column1, column2,
                                     column3, column4
                                 ];
+                                owner=returnedData.owner;
                                 $(returnedData.result)
                                     .each(
                                         function(index,
@@ -378,7 +391,7 @@ $(document)
                                     .appendChild(column3);
                                 document.getElementById("images")
                                     .appendChild(column4);
-                                if(!btnadded){
+                                if((!btnadded)&&owner==user){
                                  addPostImage();
                               
                                 btnadded=true;
@@ -390,6 +403,7 @@ $(document)
                                 alert(returnedData.error);
                                 if (returnedData.error == 'no images found') {
                                     addPostImage();
+                                    btnadded=true;
                                     
 
                                 }

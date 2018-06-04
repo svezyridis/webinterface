@@ -29,6 +29,11 @@ $(document)
                     addFriendButton();
                 } else
                     alert(returnedData.error)
+                    if(returnedData.error=='token has expired'){
+			$.post('Caller', {
+				action : "signout",
+			    }, function(returnedData) {});
+		    }
             }, 'json');
 
             function getUsername() {

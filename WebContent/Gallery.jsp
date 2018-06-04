@@ -31,7 +31,7 @@
 
 <!-- Google Webfonts -->
 <link
-	href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500'
+	href='https://fonts.googleapis.com/css?family=Roboto:400,300,100,500'
 	rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700'
 	rel='stylesheet' type='text/css'>
@@ -101,9 +101,7 @@
 				<div class="col-md-12 text-center">
 					<p>
 						<small>&copy; Hydrogen Free HTML5 Template. All Rights
-							Reserved. <br>Designed by: <a href="http://freehtml5.co/"
-							target="_blank">FREEHTML5.co</a> | Images by: <a
-							href="http://pexels.com" target="_blank">Pexels</a>
+							Reserved. <br>Designed by: Savvas Vezyridis
 						</small>
 					</p>
 				</div>

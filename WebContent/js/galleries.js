@@ -4,11 +4,12 @@ $(document)
 		
 		    var owner = getUrlParameter('user');		    
 		    var user;
+		    var gallerylist = [];
 		   
-		    if(token==null){
+		    if(typeof token == 'undefined'){
 			
 			var divlogin=document.createElement("DIV");
-			divlogin.innerText="Please";
+			divlogin.innerText="Please ";
 			var login= document.createElement("A");
 			login.setAttribute("href","login");
 			login.innerText="login";
@@ -26,8 +27,16 @@ $(document)
 			    user = returnedData.username;
 			    setMenu();
 			    getGalleries();
+			    if(owner==user||owner==null||owner==""){
+			    addGalleryButton();
+			    }
 			} else
 			    alert(returnedData.error)
+			    if(returnedData.error=='token has expired'){
+				$.post('Caller', {
+					action : "signout",
+				    }, function(returnedData) {});
+			    }
 		    }, 'json');
 
 		    function getUsername() {
@@ -78,6 +87,8 @@ $(document)
 						    .each(
 							    function(index,
 								    gallery) {
+								if($.inArray(gallery.galleryid,gallerylist)==-1){
+			                                            gallerylist.push(gallery.galleryid);
 				
 								var gal=document.createElement("A");
 								gal.innerText=gallery.galleryname;
@@ -105,11 +116,14 @@ $(document)
 									    }, 'json');
 								
 								gal.appendChild(img);
+								if(owner==user||owner==null||owner==""){
 								var deletebtn=addButton(gallery);
 								gal.appendChild(deletebtn);
+								}
 
 								columns[(index % 4)]
 									.appendChild(gal)
+								}
 							    });
 					    document.getElementById("images")
 						    .appendChild(column1);
@@ -184,6 +198,70 @@ $(document)
 				: decodeURIComponent(results[1].replace(/\+/g,
 					' '));
 		    }
+		    function addGalleryButton() {
+	                var postform = document
+	                    .createElement("form");
+	                postform.setAttribute("id",
+	                    "addgallery");
+	                var frienddiv = document.createElement("DIV");
+	                var action = document.createElement("input");
+	                action.setAttribute("name", "action");
+	                action.setAttribute("type", "hidden");
+	                action.setAttribute("value", "addGallery");
+	                var text = document.createElement("input");
+	                text.setAttribute("name", "galleryname");
+	                text.setAttribute("type", "text");
+	                text.setAttribute("placeholder","type gallery name");
+	                var tkn = document.createElement("input");
+	                tkn.setAttribute("name", "token");
+	                tkn.setAttribute("type", "hidden")
+	                tkn.setAttribute("value", JSON.stringify(token));
+	                var gallerybtn = document
+	                    .createElement("button");
+	                gallerybtn.setAttribute("type",
+	                    "submit");
+	                gallerybtn.innerText = "Add Gallery";
+	                postform.appendChild(text);
+	                postform.appendChild(tkn);
+	                
+	                postform.appendChild(action);
+	                postform.appendChild(gallerybtn);
+	                postform.addEventListener('submit',
+	                    function(event) {
+	                        event.preventDefault();
+	                        addGallery(this);
+	                    });
+	                document.getElementById("button").appendChild(postform);
+	            
+	            }
+		    function addGallery(form) {
+	                var dataposted = new FormData(form);
+	                for (var pair of dataposted.entries()) {
+	                    console.log(pair[0] + ', ' + pair[1]);
+	                    if(pair[0]=='friendname')
+	                	var name=pair[1];
+	                }
+	                $
+	                    .ajax({
+
+	                        type: "POST",
+	                        url: 'Caller',
+	                        data: dataposted,
+	                        processData: false,
+	                        contentType: false,
+	                        success: function(response) {
+	                            response = JSON.parse(response);
+	                            if(response.error==''){
+	                            	alert('Gallery added');
+	                            	getGalleries();
+	                        }
+	                            else
+	                        	alert(response.error);
+	                            	    
+	                        },
+	                        datatype: 'json'
+	                    })
+	            }
 		    function getRandomInt(min, max) {
 			    return Math.floor(Math.random() * (max - min + 1)) + min;
 			}

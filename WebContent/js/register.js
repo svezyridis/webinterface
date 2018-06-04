@@ -2,8 +2,8 @@ $(document).ready(
 	function() {
 
 	    var user;
-	    var dirid;
 	    var callback;
+	    var dirid;
 	    
 	    if (typeof token != 'undefined') {
 	    $.post('Caller', {
@@ -22,26 +22,15 @@ $(document).ready(
 		    }
 	    }, 'json');
 	    }
-	    setCallback();
-	    setDirId();
-	    setLoginPages();
+	   setCallback();
+	   setDirId();
+	    setRegisterPages();
 	    
 
 	    function getUsername() {
 		
 		return user;
 	    }
-	    function setDirId(){
-		    $
-	            .get(
-	                'Caller', {action:"getAvailableDs"
-	                },
-	                function(returnedData) {
-	                    $(returnedData)
-	                    dirid=returnedData[0].identifier;
-	                        
-	                }, 'json');
-		}
 	    function setCallback(){
 		    $
 	            .get(
@@ -54,6 +43,7 @@ $(document).ready(
 	                        
 	                },'json');
 		}
+	 
 
 	    function setMenu() {
 		document.getElementById('username').innerText = getUsername();
@@ -63,22 +53,35 @@ $(document).ready(
 		document.getElementById('list3').setAttribute("href","Friends.jsp");
 		document.getElementById('signout').removeAttribute("hidden");
 	    }
-	    function setLoginPages(){
+	    function setDirId(){
+		    $
+	            .get(
+	                'Caller', {action:"getAvailableDs"
+	                },
+	                function(returnedData) {
+	                    $(returnedData)
+	                    dirid=returnedData[0].identifier;
+	                        
+	                }, 'json');
+		}
+	    function setRegisterPages(){
 		$
                 .get(
                     'Caller', {action:"getAvailableAs"
                     },
                     function(returnedData) {
+                	
                         $(returnedData)
                             .each(
                                 function(index,
                                     system) {
                                    
+                                   
                                     var par=document.createElement("P");
-                                    par.innerText="Login with: ";
+                                    par.innerText="Register with: ";
                                     var sys=document.createElement("A");
                                     sys.innerText=system.name;
-                                    sys.setAttribute("href",system.loginurl+"?system="+dirid+"&callback="+callback);
+                                    sys.setAttribute("href",system.registerurl+"?callback="+callback+"&system="+dirid);
                                     par.appendChild(sys);
                                     document.getElementById("systems").appendChild(par);
                                 });

@@ -207,6 +207,43 @@ public class Caller extends HttpServlet {
 			response.getWriter().flush();
 			return;
 		}
+		else if (action.equals("addGallery")) {
+			String galleryname=request.getParameter("galleryname");
+			String data = createGallery(token,galleryname).toString();
+			response.setContentType("application/JSON");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(data);
+			response.getWriter().flush();
+			return;
+		}
+		else if (action.equals("renewToken")) {
+			HttpSession session = request.getSession(false);
+			session.removeAttribute("token");
+			session.setAttribute("token", token);
+			return;
+		}
+	}
+
+	private Object createGallery(String token, String galleryname) {
+		try {
+			System.out.println(Systems.getRandomDirectoryURL());
+			Content content = Request
+					.Post(Systems.getRandomDirectoryURL()).bodyForm(Form.form().add("token", token)
+							.add("action", "createGallery")
+							.add("galleryname",galleryname )
+							.add("token", token)
+							.build())
+					.execute().returnContent();
+			System.out.println(content.asString());
+
+			JSONObject tokenjs = new JSONObject(content.asString());
+			return tokenjs;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			JSONObject tokenjs = new JSONObject();
+			tokenjs.put("error", e.getMessage());
+			return tokenjs;
+		}
 	}
 
 	private Object deleteGallery(String token, String galleryname) {
